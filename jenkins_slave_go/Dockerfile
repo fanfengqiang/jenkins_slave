@@ -5,7 +5,7 @@ ARG DOCKER_VERSION=18.06.3
 ARG GO_VERSION=1.12.4
 ARG GO_PATH=/root/go
 
-RUN yum install curl wget java-1.8.0-openjdk git openssh-client openssl procps -y \
+RUN yum install iproute curl wget java-1.8.0-openjdk git openssh-client openssl procps -y \
     && yum clean all && rm -rf /var/cache/yum \
     && wget https://download.docker.com/linux/static/stable/x86_64/docker-${DOCKER_VERSION}-ce.tgz \
     && tar -xf docker-${DOCKER_VERSION}-ce.tgz \
