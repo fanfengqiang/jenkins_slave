@@ -1,6 +1,6 @@
 FROM centos:7
 
-ARG JENKINS_SLAVE_VERSION=3.29
+ARG JENKINS_SLAVE_VERSION=3.27
 ARG DOCKER_VERSION=18.06.3
 
 
@@ -10,8 +10,9 @@ RUN yum install curl wget java-1.8.0-openjdk git openssh-client openssl procps -
     && tar -xf docker-${DOCKER_VERSION}-ce.tgz \
     && mv docker/docker /bin/docker \
     && rm -rf docker \
+    && wget https://raw.githubusercontent.com/jenkinsci/docker-jnlp-slave/${JENKINS_SLAVE_VERSION}-1/jenkins-slave -O /jenkins-slave \
+    && chmod +x  /jenkins-slave \
     && curl --create-dirs -sSLo /usr/share/jenkins/slave.jar https://repo.jenkins-ci.org/public/org/jenkins-ci/main/remoting/${JENKINS_SLAVE_VERSION}/remoting-${VERSION}.jar
 
-COPY --from=cnych/jenkins:jnlp /usr/local/bin/jenkins-slave /usr/local/bin/jenkins-slave
 
-ENTRYPOINT ["jenkins-slave"]
+ENTRYPOINT ["/jenkins-slave"]
